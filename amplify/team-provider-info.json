@@ -1,0 +1,32 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-githubrepostatsapp-dev-e5eaf-authRole",
+      "UnauthRoleArn": "arn:aws:iam::174495933663:role/amplify-githubrepostatsapp-dev-e5eaf-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::174495933663:role/amplify-githubrepostatsapp-dev-e5eaf-authRole",
+      "Region": "ap-south-1",
+      "DeploymentBucketName": "amplify-githubrepostatsapp-dev-e5eaf-deployment",
+      "UnauthRoleName": "amplify-githubrepostatsapp-dev-e5eaf-unauthRole",
+      "StackName": "amplify-githubrepostatsapp-dev-e5eaf",
+      "StackId": "arn:aws:cloudformation:ap-south-1:174495933663:stack/amplify-githubrepostatsapp-dev-e5eaf/aa91f9b0-5be0-11ef-a1d8-028c92c94da7",
+      "AmplifyAppId": "dhxw89rcj9ziv"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "dhxw89rcj9ziv",
+          "type": "manual"
+        }
+      },
+      "function": {
+        "githubrepostatsapp98f6e5c3": {
+          "deploymentBucketName": "amplify-githubrepostatsapp-dev-e5eaf-deployment",
+          "s3Key": "amplify-builds/githubrepostatsapp98f6e5c3-636166562b5a72723279-build.zip"
+        }
+      },
+      "api": {
+        "api277c47ff": {}
+      }
+    }
+  }
+}

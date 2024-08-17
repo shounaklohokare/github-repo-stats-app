@@ -1,0 +1,66 @@
+{
+  "api": {
+    "api277c47ff": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "githubrepostatsapp98f6e5c3"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
+  "function": {
+    "githubrepostatsapp98f6e5c3": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "hosting": {
+    "amplifyhosting": {
+      "providerPlugin": "awscloudformation",
+      "service": "amplifyhosting",
+      "type": "manual"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_githubrepostatsapp98f6e5c3_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "githubrepostatsapp98f6e5c3"
+        }
+      ]
+    },
+    "AMPLIFY_function_githubrepostatsapp98f6e5c3_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "githubrepostatsapp98f6e5c3"
+        }
+      ]
+    },
+    "AMPLIFY_hosting_amplifyhosting_appId": {
+      "usedBy": [
+        {
+          "category": "hosting",
+          "resourceName": "amplifyhosting"
+        }
+      ]
+    },
+    "AMPLIFY_hosting_amplifyhosting_type": {
+      "usedBy": [
+        {
+          "category": "hosting",
+          "resourceName": "amplifyhosting"
+        }
+      ]
+    }
+  }
+}
