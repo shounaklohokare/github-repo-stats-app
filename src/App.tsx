@@ -1,34 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react"
+import axios from "axios"
+
 
 function App() {
-  const [count, setCount] = useState(0)
+
+
+  const [data, setData] = useState([])
+  const [repoPath, setRepoPath] = useState("")
+
+
+
+  const getRepoPath = (url: string) => {
+      const match = url?.match("/github\.com\/([^/?#]+\/[^/?#]+)/") ?? "NULL"
+
+      if(match){
+        return match[1]
+      }
+
+      return "NULL"
+
+  }
+
+  const getRepoStats = () => {
+
+      if(repoPath === "" || repoPath==="NULL"){
+        console.log("error")
+      }
+
+  }
+
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="h-screen bg-[#F6F8FA] flex items-center flex-col">
+        <h1 className="text-center text-2xl md:text-4xl font-mono mt-8">GitHub Repository Stats</h1>
+        <div className="mt-28 flex flex-col">
+              <input type="text" placeholder="Enter GitHub repository url" className="w-80 text-center py-2 text-black border border-gray-900 bg-[#F6F8FA] rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" value={repoPath} onChange={(e) => setRepoPath(getRepoPath(e.target.value))}/>
+              <button type="submit" className="w-24 mx-auto px-2 py-1 mt-2 bg-[#1F2328] text-white font-semibold rounded-lg shadow-md hover:bg-gray-800focus:outline-none" onClick={getRepoStats}>Submit</button>
+        </div>
+     
+    </div>
   )
 }
 

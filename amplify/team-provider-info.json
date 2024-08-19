@@ -19,13 +19,13 @@
         }
       },
       "function": {
-        "githubrepostatsapp98f6e5c3": {
+        "githubrepostatsappbb2cad26": {
           "deploymentBucketName": "amplify-githubrepostatsapp-dev-e5eaf-deployment",
-          "s3Key": "amplify-builds/githubrepostatsapp98f6e5c3-636166562b5a72723279-build.zip"
+          "s3Key": "amplify-builds/githubrepostatsappbb2cad26-41366971656d3046436c-build.zip"
         }
       },
       "api": {
-        "api277c47ff": {}
+        "apic2466369": {}
       }
     }
   }

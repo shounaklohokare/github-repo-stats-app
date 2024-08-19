@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/get-repo-stats/{owner-name}/{repo-name}": {
+      "name": "/get-repo-stats/{owner-name}/{repo-name}",
+      "lambdaFunction": "githubrepostatsappbb2cad26",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

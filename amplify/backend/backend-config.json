@@ -1,6 +1,6 @@
 {
   "api": {
-    "api277c47ff": {
+    "apic2466369": {
       "dependsOn": [
         {
           "attributes": [
@@ -8,7 +8,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "githubrepostatsapp98f6e5c3"
+          "resourceName": "githubrepostatsappbb2cad26"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -16,7 +16,7 @@
     }
   },
   "function": {
-    "githubrepostatsapp98f6e5c3": {
+    "githubrepostatsappbb2cad26": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
@@ -30,19 +30,19 @@
     }
   },
   "parameters": {
-    "AMPLIFY_function_githubrepostatsapp98f6e5c3_deploymentBucketName": {
+    "AMPLIFY_function_githubrepostatsappbb2cad26_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "githubrepostatsapp98f6e5c3"
+          "resourceName": "githubrepostatsappbb2cad26"
         }
       ]
     },
-    "AMPLIFY_function_githubrepostatsapp98f6e5c3_s3Key": {
+    "AMPLIFY_function_githubrepostatsappbb2cad26_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "githubrepostatsapp98f6e5c3"
+          "resourceName": "githubrepostatsappbb2cad26"
         }
       ]
     },
