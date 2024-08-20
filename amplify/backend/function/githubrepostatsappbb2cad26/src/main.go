@@ -63,7 +63,7 @@ func HandleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (
 			"Content-Type":                 "application/json",
 			"Access-Control-Allow-Origin":  "*",
 			"Access-Control-Allow-Methods": "GET",
-			"Access-Control-Allow-Headers": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization",
+			"Access-Control-Allow-Headers": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, X-Api-Key",
 		},
 	}
 
