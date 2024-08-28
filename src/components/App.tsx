@@ -1,8 +1,8 @@
 import { FC, useState  } from "react"
-import axios from "axios"
+// import axios from "axios"
 import { ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
-import { API_ID, API_KEY } from "../utils/api_details";
+// import { API_ID, API_KEY } from "../utils/api_details";
 import { getRepoPath, toastError } from "../utils/utils";
 
 import repoData from '../data.json'
@@ -47,10 +47,10 @@ const App:FC = () => {
       console.log(repoPath)
       // const res = await axios.get(`https://${API_ID}.execute-api.ap-south-1.amazonaws.com/dev/get-repo-stats/${repoPath}`, {headers: headers})
 
-      console.log(repoData.data)
+      console.log(repoData)
 
-      setData(repoData.data)
-      setLangData(convertToKeyValue(repoData.data.languages))
+      setData(repoData)
+      setLangData(convertToKeyValue(repoData.languages))
 
   }
 

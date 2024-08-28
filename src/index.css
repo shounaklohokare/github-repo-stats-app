@@ -15,7 +15,7 @@
     }
 
     .input-div{
-        @apply mt-28 flex flex-col;
+        @apply mt-24 flex flex-col;
     }
 
     .submit-btn{

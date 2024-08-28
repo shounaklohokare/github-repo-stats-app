@@ -15,8 +15,11 @@ import (
 type Response events.APIGatewayProxyResponse
 
 type RepoStat struct {
-	MetaData  string `json:"metadata"`
-	Languages string `json:"languages"`
+	MetaData     string `json:"metadata"`
+	UserData     string `json:"userdata"`
+	Languages    string `json:"languages"`
+	Contributors string `json:"contributors"`
+	Branches     string `json:"branches"`
 }
 
 func main() {
@@ -34,7 +37,11 @@ func HandleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (
 
 	metadata, err := fetchFromGitAPI(fmt.Sprintf("https://api.github.com/repos/%s", repoPath))
 
-	log.Println(metadata)
+	if err != nil {
+		return Response{StatusCode: 404}, err
+	}
+
+	userdata, err := fetchFromGitAPI(fmt.Sprintf("https://api.github.com/users/%s", ownerName))
 
 	if err != nil {
 		return Response{StatusCode: 404}, err
@@ -42,13 +49,23 @@ func HandleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (
 
 	languages, err := fetchFromGitAPI(fmt.Sprintf("https://api.github.com/repos/%s/languages", repoPath))
 
-	log.Println(languages)
+	if err != nil {
+		return Response{StatusCode: 404}, err
+	}
+
+	contributors, err := fetchFromGitAPI(fmt.Sprintf("https://api.github.com/repos/%s/contributors", repoPath))
 
 	if err != nil {
 		return Response{StatusCode: 404}, err
 	}
 
-	resBody := RepoStat{MetaData: metadata, Languages: languages}
+	branches, err := fetchFromGitAPI(fmt.Sprintf("https://api.github.com/repos/%s/branches", repoPath))
+
+	if err != nil {
+		return Response{StatusCode: 404}, err
+	}
+
+	resBody := RepoStat{MetaData: metadata, UserData: userdata, Languages: languages, Contributors: contributors, Branches: branches}
 	log.Println(resBody)
 	jsonData, err := json.Marshal(resBody)
 	if err != nil {
