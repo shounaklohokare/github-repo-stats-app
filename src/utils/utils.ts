@@ -34,3 +34,16 @@ export const getRepoPath = (url: string) => {
 
 }
 
+export const getFormattedDate = (isoDate : string) => {
+
+    const date = new Date(isoDate);
+
+    const day = date.getUTCDate();
+    const month = date.toLocaleString('en-US', { month: 'short' });
+    const year = date.getUTCFullYear();
+
+
+    return `${day} ${month} ${year}`;
+
+
+}

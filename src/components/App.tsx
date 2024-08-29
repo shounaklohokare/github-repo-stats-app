@@ -7,19 +7,31 @@ import { getRepoPath, toastError } from "../utils/utils";
 
 import repoData from '../data.json'
 import LangDonutChart from "./LangDonutChart";
+import BasicRepoInfo from "./BasicRepoInfo";
 
 export interface LangValuePair {
   name: string;
   value: number;
 }
 
+export interface LambdaResponse {
+  metadata: string;
+  userdata: string;
+  languages: string;
+  contributors: string;
+}
+
+
+
 const App:FC = () => {
 
-  const [data, setData] = useState<any>([])
+  const [data, setData] = useState<LambdaResponse>()
   const [input, setInput] = useState("")
   const [langData, setLangData] = useState<LangValuePair[] | []>([])
- 
+  const [userData, setUserData] = useState<any | []>([])
+  const [metaData, setMetaData] = useState<any | []>([])
 
+  
   // const headers = {
   //   'x-api-key': API_KEY
   // }
@@ -50,7 +62,9 @@ const App:FC = () => {
       console.log(repoData)
 
       setData(repoData)
-      setLangData(convertToKeyValue(repoData.languages))
+      setLangData(convertToKeyValue(data!.languages))
+      setUserData(JSON.parse(data!.userdata))
+      setMetaData(JSON.parse(data!.metadata))
 
   }
 
@@ -62,6 +76,7 @@ const App:FC = () => {
               <input type="text" placeholder="Enter GitHub repository url" className="input" value={input} onChange={(e) => setInput(e.target.value)}/>
               <button type="submit" className="submit-btn" onClick={getRepoStats}>Submit</button>
         </div>
+        <BasicRepoInfo basicRepoInfo={metaData} userData={userData}/>
         <LangDonutChart langData={langData} />
         <ToastContainer />
     </div>
