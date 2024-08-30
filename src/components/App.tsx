@@ -8,6 +8,7 @@ import { getRepoPath, toastError } from "../utils/utils";
 import repoData from '../data.json'
 import LangDonutChart from "./LangDonutChart";
 import BasicRepoInfo from "./BasicRepoInfo";
+import ContributorsLeaderBoard from "./ContributorsLeaderBoard";
 
 export interface LangValuePair {
   name: string;
@@ -21,6 +22,11 @@ export interface LambdaResponse {
   contributors: string;
 }
 
+export interface Contributor{
+  login : string;
+  avatar_url : string;
+  contributions: string
+}
 
 
 const App:FC = () => {
@@ -30,6 +36,7 @@ const App:FC = () => {
   const [langData, setLangData] = useState<LangValuePair[] | []>([])
   const [userData, setUserData] = useState<any | []>([])
   const [metaData, setMetaData] = useState<any | []>([])
+  const [contributors, setContributors] = useState<Contributor[] | []>([])
 
   
   // const headers = {
@@ -65,6 +72,7 @@ const App:FC = () => {
       setLangData(convertToKeyValue(data!.languages))
       setUserData(JSON.parse(data!.userdata))
       setMetaData(JSON.parse(data!.metadata))
+      setContributors(JSON.parse(data!.contributors))
 
   }
 
@@ -77,7 +85,10 @@ const App:FC = () => {
               <button type="submit" className="submit-btn" onClick={getRepoStats}>Submit</button>
         </div>
         <BasicRepoInfo basicRepoInfo={metaData} userData={userData}/>
-        <LangDonutChart langData={langData} />
+        <div className="flex w-full">
+          <LangDonutChart langData={langData} />
+          <ContributorsLeaderBoard contributors={contributors}/>
+        </div>
         <ToastContainer />
     </div>
   )

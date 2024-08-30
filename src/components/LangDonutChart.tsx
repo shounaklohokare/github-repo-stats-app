@@ -12,7 +12,7 @@ const LangDonutChart:FC<LangDonutChartProps> = ({ langData }) => {
                 '#A52A2A', '#8A2BE2', '#DEB887', '#5F9EA0', '#7FFF00', '#D2691E', '#FF7F50', '#6495ED'];
     
     
-    return  <div className="mt-12 z-50 mx-auto w-96 h-72">
+    return  <div className="mt-12 mx-36 w-1/2 h-72">
                 <ResponsiveContainer >
                     <PieChart>
                         <Pie
