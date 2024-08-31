@@ -85,7 +85,7 @@ const App:FC = () => {
               <button type="submit" className="submit-btn" onClick={getRepoStats}>Submit</button>
         </div>
         <BasicRepoInfo basicRepoInfo={metaData} userData={userData}/>
-        <div className="flex w-full">
+        <div className="flex w-full pb-96">
           <LangDonutChart langData={langData} />
           <ContributorsLeaderBoard contributors={contributors}/>
         </div>

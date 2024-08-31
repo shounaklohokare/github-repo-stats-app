@@ -34,7 +34,7 @@ const BasicRepoInfo:FC<BasicRepoInfoProps> = ({ basicRepoInfo, userData  }) => {
                         <RepoStat Icon={GoStar} property="Stars" value={basicRepoInfo?.watchers_count} />
                         <RepoStat Icon={GoGitBranch} property="Default Branch" value={basicRepoInfo?.default_branch} />
                         <div className="flex font-mono">
-                        <img src={userData?.avatar_url} className="h-[5.83rem]"/>
+                        <img src={userData?.avatar_url} className="h-[5.83rem] rounded-md"/>
                         <div className="flex flex-col pl-6 mt-4">
                             <span>{basicRepoInfo?.owner?.login}</span>
                             <span>{basicRepoInfo?.name}</span>

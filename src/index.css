@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+*::after, * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px; 
+  }
+
+  .custom-scrollbar {
+    scrollbar-width: thin;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #f1f1f1; 
+    border-radius: 6px;
+  }
+
 
 @layer components {
 
