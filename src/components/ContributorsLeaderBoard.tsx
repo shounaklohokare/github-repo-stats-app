@@ -8,10 +8,10 @@ interface ContrbutorProps{
 
 const ContributorsLeaderBoard:FC<ContrbutorProps> = ({ contributors }) => {
 
-    return (contributors.length > 0 && <div className="w-1/2 flex flex-col items-center">
+    return (contributors.length > 0 && <div className="w-1/2 flex flex-col items-center mr-24">
         
         <h1 className="text-2xl text-center font-mono">Contributors Leaderboard</h1>
-        <div className="w-[37rem] border-b border-black custom-scrollbar max-h-[34rem] overflow-y-auto">
+        <div className="w-[37rem] border-b border-black custom-scrollbar max-h-[34rem] overflow-y-auto ">
                 <table className="min-w-full mt-8 border-separate border border-gray-800 rounded-[0.375rem] text-black">
                     <thead>
                         <tr>

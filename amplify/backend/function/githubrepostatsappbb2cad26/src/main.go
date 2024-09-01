@@ -7,6 +7,8 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"strings"
+	"sync"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -35,39 +37,29 @@ func HandleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (
 
 	log.Printf("repoPath :- %s", repoPath)
 
-	metadata, err := fetchFromGitAPI(fmt.Sprintf("https://api.github.com/repos/%s", repoPath))
+	urls := []string{
+		fmt.Sprintf("repos/%s", repoPath),
+		fmt.Sprintf("users/%s", ownerName),
+		fmt.Sprintf("repos/%s/languages", repoPath),
+		fmt.Sprintf("repos/%s/contributors", repoPath),
+		fmt.Sprintf("repos/%s/branches", repoPath)}
 
-	if err != nil {
-		return Response{StatusCode: 404}, err
+	var wg sync.WaitGroup
+	var mu sync.Mutex
+	response := &RepoStat{}
+
+	for _, url := range urls {
+		wg.Add(1)
+		go fetchFromGitAPI(url, &wg, response, &mu)
 	}
 
-	userdata, err := fetchFromGitAPI(fmt.Sprintf("https://api.github.com/users/%s", ownerName))
+	wg.Wait()
 
+	jsonData, err := json.Marshal(response)
 	if err != nil {
-		return Response{StatusCode: 404}, err
+		fmt.Printf("Error fetching %v", err)
 	}
 
-	languages, err := fetchFromGitAPI(fmt.Sprintf("https://api.github.com/repos/%s/languages", repoPath))
-
-	if err != nil {
-		return Response{StatusCode: 404}, err
-	}
-
-	contributors, err := fetchFromGitAPI(fmt.Sprintf("https://api.github.com/repos/%s/contributors", repoPath))
-
-	if err != nil {
-		return Response{StatusCode: 404}, err
-	}
-
-	branches, err := fetchFromGitAPI(fmt.Sprintf("https://api.github.com/repos/%s/branches", repoPath))
-
-	if err != nil {
-		return Response{StatusCode: 404}, err
-	}
-
-	resBody := RepoStat{MetaData: metadata, UserData: userdata, Languages: languages, Contributors: contributors, Branches: branches}
-	log.Println(resBody)
-	jsonData, err := json.Marshal(resBody)
 	if err != nil {
 		return Response{StatusCode: 404}, err
 	}
@@ -87,14 +79,15 @@ func HandleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (
 	return res, nil
 }
 
-func fetchFromGitAPI(url string) (string, error) {
+func fetchFromGitAPI(url string, wg *sync.WaitGroup, response *RepoStat, mu *sync.Mutex) {
 
-	log.Printf("URL in fetchFromGitAPI:- %s", url)
+	defer wg.Done()
 
-	req, err := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("https://api.github.com/%s", url), nil)
 
 	if err != nil {
-		return "", err
+		fmt.Printf("Error fetching %s: %v\n", url, err)
+		return
 	}
 
 	req.Header.Add("Accept", "application/vnd.github+json")
@@ -105,16 +98,32 @@ func fetchFromGitAPI(url string) (string, error) {
 	resp, err := client.Do(req)
 
 	if err != nil {
-		return "", err
+		fmt.Printf("Error fetching %s: %v\n", url, err)
+		return
 	}
 
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil || resp.StatusCode != http.StatusOK {
-		return "", err
+		fmt.Printf("Error fetching %s: %v\n", url, err)
+		return
 	}
 
-	return string(body), nil
+	out := string(body)
+
+	mu.Lock()
+	if strings.Contains(url, "languages") {
+		response.Languages = out
+	} else if strings.Contains(url, "users") {
+		response.UserData = out
+	} else if strings.Contains(url, "contributors") {
+		response.Contributors = out
+	} else if strings.Contains(url, "branches") {
+		response.Branches = out
+	} else {
+		response.MetaData = out
+	}
+	mu.Unlock()
 
 }
