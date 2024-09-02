@@ -21,7 +21,7 @@
       "function": {
         "githubrepostatsappbb2cad26": {
           "deploymentBucketName": "amplify-githubrepostatsapp-dev-e5eaf-deployment",
-          "s3Key": "amplify-builds/githubrepostatsappbb2cad26-695877375055616e6a7a-build.zip"
+          "s3Key": "amplify-builds/githubrepostatsappbb2cad26-4f3439376e6873377533-build.zip"
         }
       },
       "api": {

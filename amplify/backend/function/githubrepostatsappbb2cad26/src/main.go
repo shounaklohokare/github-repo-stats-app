@@ -56,9 +56,6 @@ func HandleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (
 	wg.Wait()
 
 	jsonData, err := json.Marshal(response)
-	if err != nil {
-		fmt.Printf("Error fetching %v", err)
-	}
 
 	if err != nil {
 		return Response{StatusCode: 404}, err
@@ -83,11 +80,12 @@ func fetchFromGitAPI(url string, wg *sync.WaitGroup, response *RepoStat, mu *syn
 
 	defer wg.Done()
 
+	out := ""
+
 	req, err := http.NewRequest("GET", fmt.Sprintf("https://api.github.com/%s", url), nil)
 
 	if err != nil {
-		fmt.Printf("Error fetching %s: %v\n", url, err)
-		return
+		out = fmt.Sprintf("Error fetching %s: %v\n", url, err)
 	}
 
 	req.Header.Add("Accept", "application/vnd.github+json")
@@ -96,21 +94,20 @@ func fetchFromGitAPI(url string, wg *sync.WaitGroup, response *RepoStat, mu *syn
 	client := &http.Client{}
 
 	resp, err := client.Do(req)
-
 	if err != nil {
-		fmt.Printf("Error fetching %s: %v\n", url, err)
-		return
+		out = fmt.Sprintf("Error fetching %s: %v\n", url, err)
 	}
 
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil || resp.StatusCode != http.StatusOK {
-		fmt.Printf("Error fetching %s: %v\n", url, err)
-		return
+		out = fmt.Sprintf("Error fetching %s: %v\n", url, err)
 	}
 
-	out := string(body)
+	if out == "" {
+		out = string(body)
+	}
 
 	mu.Lock()
 	if strings.Contains(url, "languages") {
