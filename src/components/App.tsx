@@ -1,14 +1,15 @@
 import { FC, useState  } from "react"
-// import axios from "axios"
+import axios from "axios"
 import { ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
-// import { API_ID, API_KEY } from "../utils/api_details";
+import { API_ID, API_KEY } from "../utils/api_details";
 import { getRepoPath, toastError } from "../utils/utils";
 
 import repoData from '../data.json'
 import LangDonutChart from "./LangDonutChart";
 import BasicRepoInfo from "./BasicRepoInfo";
 import ContributorsLeaderBoard from "./ContributorsLeaderBoard";
+
 
 export interface LangValuePair {
   name: string;
@@ -20,6 +21,7 @@ export interface LambdaResponse {
   userdata: string;
   languages: string;
   contributors: string;
+  branches: string;
 }
 
 export interface Contributor{
@@ -39,9 +41,9 @@ const App:FC = () => {
   const [contributors, setContributors] = useState<Contributor[] | []>([])
 
   
-  // const headers = {
-  //   'x-api-key': API_KEY
-  // }
+  const headers = {
+    'x-api-key': API_KEY
+  }
 
   const convertToKeyValue = (data: string): LangValuePair[] => {
     return Object.entries(JSON.parse(data)).map(([name, value]) => ({
@@ -64,15 +66,15 @@ const App:FC = () => {
           return 
       }
       console.log(repoPath)
-      // const res = await axios.get(`https://${API_ID}.execute-api.ap-south-1.amazonaws.com/dev/get-repo-stats/${repoPath}`, {headers: headers})
+      const res : LambdaResponse = await (await axios.get(`https://${API_ID}.execute-api.ap-south-1.amazonaws.com/dev/get-repo-stats/${repoPath}`, { headers: headers })!).data
 
-      console.log(repoData)
+      console.log(res)
 
-      setData(repoData)
-      setLangData(convertToKeyValue(data!.languages))
-      setUserData(JSON.parse(data!.userdata))
-      setMetaData(JSON.parse(data!.metadata))
-      setContributors(JSON.parse(data!.contributors))
+      setData(res)
+      setLangData(convertToKeyValue(res!.languages))
+      setUserData(JSON.parse(res!.userdata))
+      setMetaData(JSON.parse(res!.metadata))
+      setContributors(JSON.parse(res!.contributors))
 
   }
 
@@ -88,6 +90,7 @@ const App:FC = () => {
         <div className="flex w-full pb-96">
           <LangDonutChart langData={langData} />
           <ContributorsLeaderBoard contributors={contributors}/>
+    
         </div>
         <ToastContainer />
     </div>

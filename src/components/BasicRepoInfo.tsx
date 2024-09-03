@@ -27,7 +27,7 @@ interface BasicRepoInfoProps {
 
 const BasicRepoInfo:FC<BasicRepoInfoProps> = ({ basicRepoInfo, userData  }) => {
 
-    return (basicRepoInfo.forks && <div className="ml-6 flex my-8">
+    return (userData.id && <div className="ml-6 flex my-8">
                     <div className="flex space-x-8 mt-1">
                         <RepoStat Icon={GoRepoForked} property="Forks" value={basicRepoInfo?.forks} />
                         <RepoStat Icon={GoIssueOpened} property="Open Issues" value={basicRepoInfo?.open_issues} />
