@@ -12,7 +12,8 @@ const LangDonutChart:FC<LangDonutChartProps> = ({ langData }) => {
                 '#A52A2A', '#8A2BE2', '#DEB887', '#5F9EA0', '#7FFF00', '#D2691E', '#FF7F50', '#6495ED'];
     
     
-    return  <div className="mt-12 ml-10 mr-32 w-1/2 h-72">
+    return  <div className="md:w-1/2 md:mt-8 w-full h-72">
+                { langData.length > 0 && <h1 className="md:text-2xl text-xl text-nowrap text-center tracking-wide font-mono mb-12">Languages used in Repository</h1>}
                 <ResponsiveContainer >
                     <PieChart>
                         <Pie
@@ -31,7 +32,7 @@ const LangDonutChart:FC<LangDonutChartProps> = ({ langData }) => {
                         <Legend />
                     </PieChart>
                 </ResponsiveContainer>
-                { langData.length > 0 && <h1 className="text-2xl text-nowrap text-center tracking-wide font-mono mt-8">Languages used in Repository</h1>}
+                
             </div>
 
 }
