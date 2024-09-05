@@ -47,3 +47,17 @@ export const getFormattedDate = (isoDate : string) => {
 
 
 }
+
+export const getShortDate = (isoDate : string) => {
+
+    const date = new Date(isoDate);
+
+    const day = date.getDate();
+    const month = date.getMonth() + 1; 
+    const year = date.getFullYear().toString().slice(-2);
+
+
+    return `${day}/${month}/${year}`;
+
+}
+

@@ -1,8 +1,9 @@
 import { FC } from "react"
-import { getFormattedDate } from "../utils/utils"
+import { getFormattedDate, getShortDate } from "../utils/utils"
 import { GoRepoForked, GoIssueOpened, GoStar, GoGitBranch, GoEye } from "react-icons/go";
 import { MdDateRange } from "react-icons/md";
 import { IconType } from "react-icons";
+import { useMediaQuery } from 'react-responsive';
 
 interface BasicRepoInfo {
     forks: string;
@@ -27,24 +28,27 @@ interface BasicRepoInfoProps {
 
 const BasicRepoInfo:FC<BasicRepoInfoProps> = ({ basicRepoInfo, userData  }) => {
 
+    const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+
+
     return (userData.id && <div className="ml-6 flex my-8">
-                                <div className="flex md:flex-row flex-col md:space-x-8 mt-1 md:mx-8">
+                                <div className="flex p-2 md:flex-row flex-col md:space-x-8 mt-1 md:mx-8">
                                     <RepoStat Icon={GoRepoForked} property="Forks" value={basicRepoInfo?.forks} />
                                     <RepoStat Icon={GoIssueOpened} property="Open Issues" value={basicRepoInfo?.open_issues} />
                                     <RepoStat Icon={GoStar} property="Stars" value={basicRepoInfo?.watchers_count} />
                                     <RepoStat Icon={GoGitBranch} property="Default Branch" value={basicRepoInfo?.default_branch} />
                                 </div>
-                                <div className="flex md:flex-row flex-col font-mono">
+                                <div className="flex p-2  md:flex-row flex-col font-mono">
                                         <img src={userData?.avatar_url} className="md:h-[5.83rem] md:w-[5.83rem] h-[4.23rem] w-[4.23rem] rounded-md"/>
                                         <div className="flex flex-col md:pl-6 mt-4">
                                             <span>{basicRepoInfo?.owner?.login}</span>
                                             <span>{basicRepoInfo?.name}</span>
                                         </div>
                                 </div>
-                                <div className="flex md:flex-row flex-col md:space-x-8 mt-1 md:mx-8">
+                                <div className="flex p-2 md:flex-row flex-col md:space-x-8 mt-1 md:mx-8">
                                     <RepoStat Icon={GoEye} property="Watchers" value={basicRepoInfo.subscribers_count} />
-                                    <RepoStat Icon={MdDateRange} property="Created" value={getFormattedDate(basicRepoInfo?.created_at)} />
-                                    <RepoStat Icon={MdDateRange} property="Updated" value={getFormattedDate(basicRepoInfo?.updated_at)} />
+                                    <RepoStat Icon={MdDateRange} property="Created" value={(isMobile) ? getShortDate(basicRepoInfo?.created_at)  : getFormattedDate(basicRepoInfo?.created_at)} />
+                                    <RepoStat Icon={MdDateRange} property="Updated" value={(isMobile) ? getShortDate(basicRepoInfo?.updated_at)  : getFormattedDate(basicRepoInfo?.updated_at)} />
                                 </div>
                             </div>)
 
@@ -67,3 +71,4 @@ const RepoStat:FC<RepoStatProps> = ({Icon, property, value}) => {
 
 }
 export default BasicRepoInfo;
+
