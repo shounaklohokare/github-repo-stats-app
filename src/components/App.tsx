@@ -28,6 +28,7 @@ export interface Contributor{
   login : string;
   avatar_url : string;
   contributions: string
+  html_url: string
 }
 
 
@@ -80,7 +81,7 @@ const App:FC = () => {
 
 
   return (
-    <div className="main-div">
+    <div className="main-div ">
         <h1 className="header">GitHub Repository Stats</h1>
         <div className="input-div">
               <input type="text" placeholder="Enter GitHub repository url" className="input" value={input} onChange={(e) => setInput(e.target.value)}/>

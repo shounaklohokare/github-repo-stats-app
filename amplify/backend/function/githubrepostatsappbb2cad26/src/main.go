@@ -21,7 +21,7 @@ type RepoStat struct {
 	UserData     string `json:"userdata"`
 	Languages    string `json:"languages"`
 	Contributors string `json:"contributors"`
-	Branches     string `json:"branches"`
+	Commits      string `json:"commits"`
 }
 
 func main() {
@@ -42,7 +42,7 @@ func HandleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (
 		fmt.Sprintf("users/%s", ownerName),
 		fmt.Sprintf("repos/%s/languages", repoPath),
 		fmt.Sprintf("repos/%s/contributors", repoPath),
-		fmt.Sprintf("repos/%s/branches", repoPath)}
+		fmt.Sprintf("repos/%s/commits", repoPath)}
 
 	var wg sync.WaitGroup
 	var mu sync.Mutex
@@ -116,8 +116,8 @@ func fetchFromGitAPI(url string, wg *sync.WaitGroup, response *RepoStat, mu *syn
 		response.UserData = out
 	} else if strings.Contains(url, "contributors") {
 		response.Contributors = out
-	} else if strings.Contains(url, "branches") {
-		response.Branches = out
+	} else if strings.Contains(url, "commits") {
+		response.Commits = out
 	} else {
 		response.MetaData = out
 	}
