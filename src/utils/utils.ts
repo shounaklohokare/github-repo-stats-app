@@ -61,3 +61,9 @@ export const getShortDate = (isoDate : string) => {
 
 }
 
+export const formatCommitDetails = (commit_details : string) => {
+
+
+
+}
+

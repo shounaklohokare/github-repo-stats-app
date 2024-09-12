@@ -21,7 +21,7 @@ export interface LambdaResponse {
   userdata: string;
   languages: string;
   contributors: string;
-  branches: string;
+  commits: string;
 }
 
 export interface Contributor{
@@ -42,9 +42,9 @@ const App:FC = () => {
   const [contributors, setContributors] = useState<Contributor[] | []>([])
 
   
-  const headers = {
-    'x-api-key': API_KEY
-  }
+  // const headers = {
+  //   'x-api-key': API_KEY
+  // }
 
   const convertToKeyValue = (data: string): LangValuePair[] => {
     return Object.entries(JSON.parse(data)).map(([name, value]) => ({
@@ -67,15 +67,15 @@ const App:FC = () => {
           return 
       }
       console.log(repoPath)
-      const res : LambdaResponse = await (await axios.get(`https://${API_ID}.execute-api.ap-south-1.amazonaws.com/dev/get-repo-stats/${repoPath}`, { headers: headers })!).data
+      // const res : LambdaResponse = await (await axios.get(`https://${API_ID}.execute-api.ap-south-1.amazonaws.com/dev/get-repo-stats/${repoPath}`, { headers: headers })!).data
 
-      console.log(res)
+      console.log(repoData)
 
-      setData(res)
-      setLangData(convertToKeyValue(res!.languages))
-      setUserData(JSON.parse(res!.userdata))
-      setMetaData(JSON.parse(res!.metadata))
-      setContributors(JSON.parse(res!.contributors))
+      setData(repoData)
+      setLangData(convertToKeyValue(repoData!.languages))
+      setUserData(JSON.parse(repoData!.userdata))
+      setMetaData(JSON.parse(repoData!.metadata))
+      setContributors(JSON.parse(repoData!.contributors))
 
   }
 
