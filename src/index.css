@@ -32,7 +32,7 @@
 
 
     .main-div{
-        @apply min-h-screen bg-[#F6F8FA] flex items-center flex-col;
+        @apply min-h-max bg-[#F6F8FA] flex items-center flex-col;
     }
 
     .header{
@@ -50,5 +50,8 @@
     .input{
         @apply w-80 text-center py-2 text-black border border-gray-900 bg-[#F6F8FA] rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent;
     }
+
+
+
 
 }

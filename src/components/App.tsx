@@ -4,12 +4,11 @@ import { ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import { API_ID, API_KEY } from "../utils/api_details";
 import { formatCommitDetails, getRepoPath, toastError } from "../utils/utils";
-
-import repoData from '../data.json'
 import LangDonutChart from "./LangDonutChart";
 import BasicRepoInfo from "./BasicRepoInfo";
 import ContributorsLeaderBoard from "./ContributorsLeaderBoard";
 import CommitBarGraph from "./CommitBarGraph";
+
 
 
 export interface LangValuePair {
@@ -26,7 +25,7 @@ export interface LambdaResponse {
 }
 
 export interface CommitDetails{
-    month : string
+    year : string
     commits : number
 }
 
@@ -49,9 +48,9 @@ const App:FC = () => {
   const [commitDetails, setCommitDetails] = useState<CommitDetails[] | []>([])
 
   
-  // const headers = {
-  //   'x-api-key': API_KEY
-  // }
+  const headers = {
+    'x-api-key': API_KEY
+  }
 
   const convertToKeyValue = (data: string): LangValuePair[] => {
     return Object.entries(JSON.parse(data)).map(([name, value]) => ({
@@ -74,24 +73,24 @@ const App:FC = () => {
           return 
       }
       console.log(repoPath)
-      // const res : LambdaResponse = await (await axios.get(`https://${API_ID}.execute-api.ap-south-1.amazonaws.com/dev/get-repo-stats/${repoPath}`, { headers: headers })!).data
+      const res : LambdaResponse = await (await axios.get(`https://${API_ID}.execute-api.ap-south-1.amazonaws.com/dev/get-repo-stats/${repoPath}`, { headers: headers })!).data
 
-      console.log(repoData)
+      console.log(res)
 
-      setData(repoData)
-      setLangData(convertToKeyValue(repoData!.languages))
-      setUserData(JSON.parse(repoData!.userdata))
-      setMetaData(JSON.parse(repoData!.metadata))
-      setContributors(JSON.parse(repoData!.contributors))
+      setData(res)
+      setLangData(convertToKeyValue(res!.languages))
+      setUserData(JSON.parse(res!.userdata))
+      setMetaData(JSON.parse(res!.metadata))
+      setContributors(JSON.parse(res!.contributors))
 
-      const formattedCommits = formatCommitDetails(repoData!.commits)
+      const formattedCommits = formatCommitDetails(res!.commits)
       setCommitDetails(formattedCommits)
 
   }
 
 
   return (
-    <div className="main-div ">
+    <div className="main-div">
         <h1 className="header">GitHub Repository Stats</h1>
         <div className="input-div">
               <input type="text" placeholder="Enter GitHub repository url" className="input" value={input} onChange={(e) => setInput(e.target.value)}/>
@@ -102,8 +101,8 @@ const App:FC = () => {
           <LangDonutChart langData={langData} />
           <ContributorsLeaderBoard contributors={contributors}/>
         </div>
-        <div className="mt-14">
-        <CommitBarGraph commit_details={commitDetails}/>
+        <div className="w-full flex items-center justify-center my-12 md:mr-0 mr-[2.25rem]">
+            <CommitBarGraph commit_details={commitDetails}/>
         </div>
         <ToastContainer />
     </div>

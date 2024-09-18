@@ -75,13 +75,14 @@ const InfoPanelMobile:FC<BasicRepoInfoProps> = ({ basicRepoInfo, userData  }) =>
                         <span>{basicRepoInfo?.owner?.login}</span>
                         <span>{basicRepoInfo?.name}</span>
                     </div>
+                    <RepoStat Icon={GoGitBranch} property="Default Branch" value={basicRepoInfo?.default_branch} />
                 </div>
                 <div className="flex w-full">
                     <div className="flex w-1/2 flex-col">
                         <RepoStat Icon={GoRepoForked} property="Forks" value={basicRepoInfo?.forks} />
                         <RepoStat Icon={GoIssueOpened} property="Open Issues" value={basicRepoInfo?.open_issues} />
                         <RepoStat Icon={GoStar} property="Stars" value={basicRepoInfo?.watchers_count} />
-                        <RepoStat Icon={GoGitBranch} property="Default Branch" value={basicRepoInfo?.default_branch} />
+                       
                     </div>
                     <div className="flex w-1/2  flex-col">
                         <RepoStat Icon={GoEye} property="Watchers" value={basicRepoInfo.subscribers_count} />
