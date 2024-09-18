@@ -3,12 +3,13 @@ import axios from "axios"
 import { ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import { API_ID, API_KEY } from "../utils/api_details";
-import { getRepoPath, toastError } from "../utils/utils";
+import { formatCommitDetails, getRepoPath, toastError } from "../utils/utils";
 
 import repoData from '../data.json'
 import LangDonutChart from "./LangDonutChart";
 import BasicRepoInfo from "./BasicRepoInfo";
 import ContributorsLeaderBoard from "./ContributorsLeaderBoard";
+import CommitBarGraph from "./CommitBarGraph";
 
 
 export interface LangValuePair {
@@ -22,6 +23,11 @@ export interface LambdaResponse {
   languages: string;
   contributors: string;
   commits: string;
+}
+
+export interface CommitDetails{
+    month : string
+    commits : number
 }
 
 export interface Contributor{
@@ -40,6 +46,7 @@ const App:FC = () => {
   const [userData, setUserData] = useState<any | []>([])
   const [metaData, setMetaData] = useState<any | []>([])
   const [contributors, setContributors] = useState<Contributor[] | []>([])
+  const [commitDetails, setCommitDetails] = useState<CommitDetails[] | []>([])
 
   
   // const headers = {
@@ -77,6 +84,9 @@ const App:FC = () => {
       setMetaData(JSON.parse(repoData!.metadata))
       setContributors(JSON.parse(repoData!.contributors))
 
+      const formattedCommits = formatCommitDetails(repoData!.commits)
+      setCommitDetails(formattedCommits)
+
   }
 
 
@@ -91,7 +101,9 @@ const App:FC = () => {
         <div className="flex md:flex-row md:space-y-0 space-y-[10rem] flex-col w-full pb-12">
           <LangDonutChart langData={langData} />
           <ContributorsLeaderBoard contributors={contributors}/>
-    
+        </div>
+        <div className="mt-14">
+        <CommitBarGraph commit_details={commitDetails}/>
         </div>
         <ToastContainer />
     </div>

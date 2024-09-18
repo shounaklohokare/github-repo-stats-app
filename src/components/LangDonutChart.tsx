@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { PieChart, Pie, Cell, Label, Legend, Tooltip, ResponsiveContainer} from "recharts"
+import { PieChart, Pie, Cell, Legend, ResponsiveContainer} from "recharts"
 import { LangValuePair } from "./App";
 
 interface LangDonutChartProps {

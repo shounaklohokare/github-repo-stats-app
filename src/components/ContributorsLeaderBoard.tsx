@@ -19,7 +19,7 @@ const ContributorsLeaderBoard:FC<ContrbutorProps> = ({ contributors }) => {
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
-                        {contributors.filter((contributor) => (!contributor.login.includes("dependabot"))).map((contributor)=> (<LeaderBoardRow login={contributor.login} contributions={contributor.contributions} avatar_url={contributor.avatar_url} html_url={contributor.html_url} /> ))}
+                        {contributors.filter((contributor) => (!contributor.login.includes("dependabot"))).map((contributor)=> (<LeaderBoardRow key={contributor.login} login={contributor.login} contributions={contributor.contributions} avatar_url={contributor.avatar_url} html_url={contributor.html_url} /> ))}
                     </tbody>
                 </table>
             </div></div>)

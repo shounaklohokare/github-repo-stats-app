@@ -63,7 +63,33 @@ export const getShortDate = (isoDate : string) => {
 
 export const formatCommitDetails = (commit_details : string) => {
 
+    const monthOrder = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    const committsByMonth: { [key: string]: number } = {}
+    for(const x of JSON.parse(commit_details)){
+    
+        const date = new Date(x?.commit?.author?.date);
+
+        const year = date.getFullYear();
+
+        console.log(year)
 
 
+
+        const monthName = date.toLocaleString('en-US', { month: 'short' });
+
+        if(monthName.toString() in committsByMonth){
+            committsByMonth[monthName] += 1;
+        }else{
+            committsByMonth[monthName] = 1;
+            committsByMonth[monthName] = 1;
+        }
+
+    }
+
+    return Object.keys(committsByMonth).map(month => ({
+        month: month,
+        commits: committsByMonth[month]
+      })).sort((a, b) => monthOrder.indexOf(a.month) - monthOrder.indexOf(b.month));;
 }
 
