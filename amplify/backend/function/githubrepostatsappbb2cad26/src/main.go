@@ -1,12 +1,10 @@
 package main
 
 import (
-	"apikey"
 	"context"
 	"encoding/json"
 	"fmt"
 	"io"
-	"lambda"
 	"log"
 	"net/http"
 	"strings"
@@ -91,7 +89,7 @@ func fetchFromGitAPI(url string, wg *sync.WaitGroup, response *RepoStat, mu *syn
 	}
 
 	req.Header.Add("Accept", "application/vnd.github+json")
-	req.Header.Add("Authorization", apikey.API_KEY)
+	req.Header.Add("Authorization", API_KEY)
 
 	client := &http.Client{}
 

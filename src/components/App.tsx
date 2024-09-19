@@ -10,7 +10,6 @@ import ContributorsLeaderBoard from "./ContributorsLeaderBoard";
 import CommitBarGraph from "./CommitBarGraph";
 
 
-
 export interface LangValuePair {
   name: string;
   value: number;
@@ -39,7 +38,6 @@ export interface Contributor{
 
 const App:FC = () => {
 
-  const [data, setData] = useState<LambdaResponse>()
   const [input, setInput] = useState("")
   const [langData, setLangData] = useState<LangValuePair[] | []>([])
   const [userData, setUserData] = useState<any | []>([])
@@ -53,10 +51,10 @@ const App:FC = () => {
   }
 
   const convertToKeyValue = (data: string): LangValuePair[] => {
-    return Object.entries(JSON.parse(data)).map(([name, value]) => ({
-      name,
-      value: parseInt(value, 10)
-    }));
+      return Object.entries(JSON.parse(data)).map(([name, value]) => ({
+        name,
+        value: parseInt(JSON.stringify(value))
+      }));
   };
   
   const getRepoStats = async () => {
@@ -75,9 +73,8 @@ const App:FC = () => {
       console.log(repoPath)
       const res : LambdaResponse = await (await axios.get(`https://${API_ID}.execute-api.ap-south-1.amazonaws.com/dev/get-repo-stats/${repoPath}`, { headers: headers })!).data
 
-      console.log(res)
+     
 
-      setData(res)
       setLangData(convertToKeyValue(res!.languages))
       setUserData(JSON.parse(res!.userdata))
       setMetaData(JSON.parse(res!.metadata))
