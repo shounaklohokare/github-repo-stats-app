@@ -32,7 +32,7 @@
 
 
     .main-div{
-        @apply min-h-max bg-[#F6F8FA] flex items-center flex-col;
+        @apply h-full bg-[#F6F8FA] flex items-center flex-col;
     }
 
     .header{

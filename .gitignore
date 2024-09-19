@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# GIT PAT
+amplify/backend/function/githubrepostatsappbb2cad26/src/constants.go
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
